@@ -146,6 +146,10 @@ module Spree
       Spree::Money.new(additional_tax_total, { currency: currency })
     end
 
+    def display_tax_total
+      Spree::Money.new(included_tax_total + additional_tax_total, { currency: currency })
+    end
+
     def display_shipment_total
       Spree::Money.new(shipment_total, { currency: currency })
     end
@@ -198,14 +202,6 @@ module Spree
     # Uses default tax zone unless there is a specific match
     def tax_zone
       Zone.match(tax_address) || Zone.default_tax
-    end
-
-    # Indicates whether tax should be backed out of the price calcualtions in
-    # cases where prices include tax but the customer is not required to pay
-    # taxes in that case.
-    def exclude_tax?
-      return false unless Spree::Config[:prices_inc_tax]
-      return tax_zone != Zone.default_tax
     end
 
     # Returns the address for taxation based on configuration
@@ -286,8 +282,10 @@ module Spree
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
     def create_tax_charge!
-      Spree::TaxRate.adjust(self, line_items)
-      Spree::TaxRate.adjust(self, shipments) if shipments.any?
+      # We want to only look up the applicable tax zone once and pass it to TaxRate calculation to avoid duplicated lookups.
+      order_tax_zone = self.tax_zone
+      Spree::TaxRate.adjust(order_tax_zone, line_items)
+      Spree::TaxRate.adjust(order_tax_zone, shipments) if shipments.any?
     end
 
     def outstanding_balance
@@ -602,6 +600,9 @@ module Spree
 
       def ensure_available_shipping_rates
         if shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
+          # After this point, order redirects back to 'address' state and asks user to pick a proper address
+          # Therefore, shipments are not necessary at this point.
+          shipments.delete_all
           errors.add(:base, Spree.t(:items_cannot_be_shipped)) and return false
         end
       end
