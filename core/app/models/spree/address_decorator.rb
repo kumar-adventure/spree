@@ -1,5 +1,7 @@
-#Spree::Address.class_eval do
-#  belongs_to :cluster
+Spree::Address.class_eval do
+  belongs_to :cluster
   
-#  attr_accessor :cluster
-#end
+  def require_zipcode?
+    false
+  end
+end

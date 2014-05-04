@@ -5,7 +5,9 @@ module Spree
 
       def create
 #        authorize! :create, Spree.user_class
-        @address = Spree.address_class.new(address_params)
+        @address = Spree::Address.new(address_params.except(:cluster))
+        @address.cluster = Cluster.find_by_id(address_params[:cluster][:id])
+
         if @address.save
           respond_with(@address, :status => 201, :default_template => :show)
         else
