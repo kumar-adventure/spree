@@ -3,6 +3,16 @@ module Spree
     class AddressesController < Spree::Api::BaseController
       before_filter :find_order
 
+      def create
+#        authorize! :create, Spree.user_class
+        @address = Spree.address_class.new(address_params)
+        if @address.save
+          respond_with(@address, :status => 201, :default_template => :show)
+        else
+          invalid_resource!(@address)
+        end
+      end
+
       def show
         load_and_authorize_address(:read)
         respond_with(@address)

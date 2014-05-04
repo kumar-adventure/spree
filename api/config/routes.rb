@@ -13,7 +13,9 @@ Spree::Core::Engine.add_routes do
       resources :images
       resources :variants
       resources :product_properties
-    end
+    end 
+
+    resources :addresses, :only => [:create, :show, :update]
 
     order_routes = lambda {
       member do
