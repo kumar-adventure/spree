@@ -9,6 +9,7 @@ class Spree::BaseController < ApplicationController
   include Spree::Core::ControllerHelpers::Search
   include Spree::Core::ControllerHelpers::StrongParameters
 
+  skip_before_action :verify_authenticity_token
   respond_to :html
 end
 
