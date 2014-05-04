@@ -130,7 +130,7 @@ module Spree
         :gateway_customer_profile_id, :gateway_payment_profile_id
       ]
 
-      @@user_attributes = [:id, :email, :created_at, :updated_at]
+      @@user_attributes = [:id, :email, :ship_address_id, :created_at, :updated_at]
 
       @@property_attributes = [:id, :name, :presentation]
 
