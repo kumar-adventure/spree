@@ -6,6 +6,7 @@ module Spree
       include Spree::Api::ControllerSetup
       include Spree::Core::ControllerHelpers::SSL
       include Spree::Core::ControllerHelpers::StrongParameters
+      include Spree::Core::ControllerHelpers::Search
 
       attr_accessor :current_api_user
 
