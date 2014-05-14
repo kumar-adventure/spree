@@ -6,10 +6,13 @@ module Spree
         if params[:ids]
           @products = product_scope.where(:id => params[:ids].split(","))
         else
-          @products = product_scope.ransack(params[:q]).result
+# Enhanced to use solr search via sunspot gem.
+ 	  @searcher = build_searcher(params)
+	  @products = @searcher.retrieve_products
+#         @products = product_scope.ransack(params[:q]).result
         end
 
-        @products = @products.distinct.page(params[:page]).per(params[:per_page])
+#        @products = @products.offset(params[:page]).per_page(params[:per_page])
         expires_in 15.minutes, :public => true
         headers['Surrogate-Control'] = "max-age=#{15.minutes}"
       end
