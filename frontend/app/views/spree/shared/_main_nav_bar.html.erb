@@ -1,6 +1,13 @@
 <nav class="columns sixteen">
   <ul id="main-nav-bar" class="inline" data-hook>
     <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
+    <li id="kitchen-link" data-hook><%= link_to Spree.t(:Kitchen), '/t/category/kitchen' %></li>
+    <li id="cleaning-link" data-hook><%= link_to Spree.t(:Cleaning), '/t/category/cleaning' %></li>
+    <li id="refrigerator-link" data-hook><%= link_to Spree.t(:Refrigerator), '/t/category/refrigerator' %></li>
+    <li id="bathroom-link" data-hook><%= link_to Spree.t(:Bathroom), '/t/category/bathroom' %></li>
+    <li id="bedroom-link" data-hook><%= link_to Spree.t(:Bedroom), '/t/category/bedroom' %></li>
+    <li id="office-link" data-hook><%= link_to Spree.t(:Office), '/t/category/office' %></li>
+    <li id="pet-link" data-hook><%= link_to Spree.t(:Pet), '/t/category/pet' %></li>
     <li id="link-to-cart" data-hook>
       <noscript>
         <%= link_to Spree.t(:cart), '/cart' %>
