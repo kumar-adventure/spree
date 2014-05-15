@@ -10,6 +10,7 @@ module Spree
       @searcher = build_searcher(params)
       @products = @searcher.retrieve_products
       @taxonomies = Spree::Taxonomy.includes(root: :children)
+      @taxon = Spree::Taxon.find(params[:taxon]) if params[:taxon]
     end
 
     def show
