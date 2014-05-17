@@ -101,13 +101,19 @@ module Spree
           @collection = super
           @collection = @collection.with_deleted if params[:q][:deleted_at_null] == '0'
           # @search needs to be defined as this is passed to search_form_for
-          @search = @collection.ransack(params[:q])
-          @collection = @search.result.
-                distinct_by_product_ids(params[:q][:s]).
-                includes(product_includes).
-                page(params[:page]).
-                per(Spree::Config[:admin_products_per_page])
+# use the spree searcher here
+#          @search = @collection.ransack(params[:q])
+         @search = build_searcher(params)
+         @products = @search.retrieve_products
 
+puts @products
+          @collection = @products
+#                includes(product_includes).
+#                page(params[:page]).
+#                per(Spree::Config[:admin_products_per_page])
+
+puts "-----------------333333333333333333333-----------------------"
+puts @collection
           @collection
         end
 
