@@ -21,7 +21,7 @@ module Spree
   class AppConfiguration < Preferences::Configuration
 
     # Alphabetized to more easily lookup particular preferences
-    preference :address_requires_state, :boolean, default: true # should state/state_name be required
+    preference :address_requires_state, :boolean, default: false # should state/state_name be required
     preference :admin_interface_logo, :string, default: 'logo/spree_50.png'
     preference :admin_products_per_page, :integer, default: 10
     preference :allow_backorder_shipping, :boolean, default: false # should only be true if you don't need to track inventory
@@ -54,16 +54,16 @@ module Spree
     preference :last_check_for_spree_alerts, :string, default: nil
     preference :layout, :string, default: 'spree/layouts/spree_application'
     preference :logo, :string, default: 'logo/spree_50.png'
-    preference :max_level_in_taxons_menu, :integer, default: 1 # maximum nesting level in taxons menu
+    preference :max_level_in_taxons_menu, :integer, default: 5 # maximum nesting level in taxons menu
     preference :orders_per_page, :integer, default: 15
-    preference :prices_inc_tax, :boolean, default: false
+    preference :prices_inc_tax, :boolean, default: true
     preference :products_per_page, :integer, default: 12
     preference :promotions_per_page, :integer, default: 15
     preference :redirect_https_to_http, :boolean, :default => false
     preference :require_master_price, :boolean, default: true
     preference :shipment_inc_vat, :boolean, default: false
     preference :shipping_instructions, :boolean, default: false # Request instructions/info for shipping
-    preference :show_only_complete_orders_by_default, :boolean, default: true
+    preference :show_only_complete_orders_by_default, :boolean, default: false
     preference :show_variant_full_price, :boolean, default: false #Displays variant full price or difference with product price. Default false to be compatible with older behavior
     preference :show_products_without_price, :boolean, default: false
     preference :show_raw_product_description, :boolean, :default => false
